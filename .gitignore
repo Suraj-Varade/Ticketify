@@ -486,5 +486,5 @@ $RECYCLE.BIN/
 *.swp
 API/appsettings.json
 logs/*
-Infrastructure/Migrations/*
+# Infrastructure/Migrations/*
 publish_output/*

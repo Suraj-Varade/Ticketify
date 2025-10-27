@@ -23,16 +23,16 @@ jobs:
           dotnet-version: ${{env.DOTNET_VERSION}}
           
       - name: Restore dependencies
-        run: dotnet restore ./Ticketify.sln
+        run: dotnet restore
         
       - name: Build
-        run: dotnet build ./Ticketify.sln --configuration Release
+        run: dotnet build --configuration Release
         
       - name: Test
         run: dotnet test
         
       - name: Publish
-        run: dotnet publish ./Ticketify.sln -c Release -o ${{env.BUILD_OUPUT}}
+        run: dotnet publish -c Release -o ${{env.BUILD_OUPUT}}
         
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -59,4 +59,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{env.AZURE_WEBAPP_NAME}}
-          package: ${{env.BUILD_OUTPUT}}/dotnet-app
+          package: ${{env.BUILD_OUTPUT}}

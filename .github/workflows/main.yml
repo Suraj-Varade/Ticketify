@@ -1,1 +1,66 @@
+name: Ticketify CI-CD
 
+on: 
+  push:
+    branches: ['main']
+    
+  workflow_dispatch: 
+
+env:
+  AZURE_WEBAPP_NAME: ticketify-api
+  DOTNET_VERSION: '9.0.x'
+  BUILD_OUPUT: './publish_output'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        
+      - name: Setup .net
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{env.DOTNET_VERSION}}
+          
+      - name: Restore dependencies
+        run: dotnet restore ./Ticketify.sln
+        
+      - name: Build
+        run: dotnet build ./Ticketify.sln --configuration Release
+        
+      - name: Test
+        run: dotnet test
+        
+      - name: Publish
+        run: dotnet publish ./Ticketify.sln -c Release -o ${{env.BUILD_OUPUT}}
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-app
+          path: ${{env.BUILD_OUPUT}}
+         
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-app
+          path: ${{env.BUILD_OUPUT}}
+      
+      - name: Azure login
+        uses: azure/login@v2
+        with: 
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+            
+      - name: Deploy to azure web app
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{env.AZURE_WEBAPP_NAME}}
+          package: ${{env.BUILD_OUPUT}}
+            
+     
+            
+            
+  

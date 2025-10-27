@@ -488,3 +488,4 @@ API/appsettings.json
 logs/*
 # Infrastructure/Migrations/*
 publish_output/*
+publish-output/*

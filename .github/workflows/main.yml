@@ -26,13 +26,13 @@ jobs:
         run: dotnet restore ./Ticketify.sln
         
       - name: Build
-        run: dotnet build ./Ticketify.API/Ticketify.API.csproj --configuration Release
+        run: dotnet build ./API/API.csproj --configuration Release
         
       - name: Test
         run: dotnet test ./Ticketify.sln
         
       - name: Publish
-        run: dotnet publish ./Ticketify.API/Ticketify.API.csproj -c Release -o ${{env.BUILD_OUTPUT}}
+        run: dotnet publish ./API/API.csproj -c Release -o ${{env.BUILD_OUTPUT}}
         
       - name: Upload artifact
         uses: actions/upload-artifact@v4

@@ -59,4 +59,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{env.AZURE_WEBAPP_NAME}}
-          package: ${{env.BUILD_OUTPUT}}
+          package: ${{env.BUILD_OUTPUT}}/dotnet-app

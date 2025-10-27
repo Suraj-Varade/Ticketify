@@ -1,0 +1,81 @@
+@API_HostAddress = http://localhost:5225/api
+
+## - get all tickets
+GET {{API_HostAddress}}/tickets/
+Accept: application/json
+
+###
+## - get specific ticket by id
+GET {{API_HostAddress}}/tickets/20
+Accept: application/json
+
+###
+## - get tickets - CreatedBy id : 118
+GET {{API_HostAddress}}/tickets?createdBy=118
+Accept: application/json
+
+###
+## - get tickets - OrderBy CreatedAt Desc
+GET {{API_HostAddress}}/tickets?OrderBy=createdatdesc
+Accept: application/json
+
+###
+## - get tickets - SearchTerm = Password
+GET {{API_HostAddress}}/tickets?SearchTerm=Password
+Accept: application/json
+
+
+###
+## - create ticket
+POST {{API_HostAddress}}/tickets
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "HDMI cable not working",
+  "description": "Please help",
+  "createdBy": 118,
+  "assignTo": null,
+  "createdAt": "2025-10-20T15:00:00",
+  "modifiedAt": null
+}
+
+###
+## - create ticket with invalid model
+POST {{API_HostAddress}}/tickets
+Accept: application/json
+Content-Type: application/json
+
+{
+  "createdBy": 118,
+  "assignTo": null,
+  "createdAt": "2025-10-20T15:00:00",
+  "modifiedAt": null
+}
+
+### 
+## - get the newly created ticket
+GET {{API_HostAddress}}/tickets/23
+Accept: application/json
+
+###
+## - update the ticket
+PUT {{API_HostAddress}}/tickets/23
+Content-Type: application/json
+
+{
+  "title": "HDMI cable not working",
+  "description": "Please help",
+  "createdBy": 118,
+  "assignTo": null,
+  "status": "Resolved",
+  "createdAt": "2025-10-20T15:00:00",
+  "modifiedAt": null,
+  "id": 23
+}
+
+### 
+## - delete the ticket
+DELETE {{API_HostAddress}}/tickets/23
+
+

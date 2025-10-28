@@ -12,7 +12,7 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: ./TicketifyWorkDir
+    working-directory: ./Ticketify
 
 env:
   AZURE_WEBAPP_NAME: ticketifyne-dev

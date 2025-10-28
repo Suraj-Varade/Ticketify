@@ -14,8 +14,13 @@ This repo includes a ready GitHub Actions workflow to build/publish the API and 
 
 ## Tech Stack
 - **Language:** C#
-- **Framework:** .NET 9, XUnit (Test)
-- **Architecture:** Clean architecture, Interface-driven design, dependency injection, EntityFramework Core, in-memory store (test)  
+- **Backend (API):** ASP.NET Core Web API (.NET 9), Entity Framework Core (Code-First + Migrations), Serilog for logging   
+- **Database:** Azure SQL Database, EF Core Migrations
+- **Infrastructure & Cloud:** Azure App Service, Azure SQL Database, Azure Resource Group, Bicep template for Infrastructure as Code (IaC), Service Principal for secure deployment automation
+- **DevOps / CI-CD:** Github actions for build, test and deploy, automated build -> publish -> deploy pipelines, secrets management via Github Environments & azure app settings.
+- **Testing:** xUnit for unit testing, In-Memery EF Core for repository testing. 
+- **Architecture:** Clean architecture, Interface-driven design, dependency injection, EntityFramework Core, in-memory store (test)
+
 
 ## Project Structure
 ```text

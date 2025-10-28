@@ -56,6 +56,9 @@ jobs:
       url: ${{steps.deploy-to-azure-web-app.outputs.webapp-url}}
     
     steps:
+      - name: checkout
+        uses: actions/checkout@v5
+        
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
@@ -67,9 +70,8 @@ jobs:
         with: 
           creds: ${{secrets.AZURE_CREDENTIALS}}
           
-      - checkout: self
       # below step will create azure resources - using main_dev.bicep file.
-      - name: Deploy azure resources - using main_prod.bicep file
+      - name: Deploy azure resources - using main_dev.bicep file
         uses: azure/CLI@v2
         with:
           inlineScript: |

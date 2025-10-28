@@ -10,6 +10,7 @@ Ticketify is an ASP.NET Core Web API (targeting .NET 9) using:
 * Seed data for quick demo
 * Unit tests (xUnit) and test helpers
 * Bicep templates (in ```.github/infra/templates```) for provisioning Azure resources (App Service, SQL Server, App Service Plan, etc.)
+
 This repo includes a ready GitHub Actions workflow to build/publish the API and an example Bicep for automating infra creation.
 
 ## Tech Stack
@@ -86,39 +87,45 @@ git clone https://github.com/Suraj-Varade/Ticketify.git
 
 cd Ticketify
 ```
+- Use appsettings.Development.json for local development (do NOT commit secrets).
+- Alternatively, you can aslo use dotnet user-secrets for local secrets
+```text
+"ConnectionStrings": {
+    "DefaultConnection": "{yourDbConnectionString}"
+  },
+```
+
 **2. Restore, build and run**
 ```text
 # from repo root
 dotnet restore Ticketify.sln
 
 # build only the API project
-dotnet build ./API/API.csproj -c Release
+dotnet build /API/API.csproj -c Release
+
+# (Optional) If you want to run tests
+dotnet test
 
 # publish (local verification)
-dotnet publish ./API/API.csproj -c Release -o ./publish_output
+dotnet publish /API/API.csproj -c Release -o ./publish_output
 
 # run the published app
 cd publish_output
+
 dotnet API.dll
 
 # or from project
-dotnet run --project ./API/API.csproj -c Release
+dotnet run --project /API/API.csproj -c Release
 ```
-**3. Additionally, run tests**
-```text
-dotnet test
-```
+
+After the app starts, test:
+http://0.0.0.0:8080/api/tickets
+
 **Ef migrations:**
 * dotnet-ef tool if you manage migrations locally:
 ```text
 dotnet tool install --global dotnet-ef
 ```
-**Configure connection strings (local dev)**
-* Use appsettings.Development.json for local development (do NOT commit secrets).
-* Alternatively, you can aslo use dotnet user-secrets for local secrets
-
-After the app starts, test:
-http://localhost:5000/api/tickets
 
 ## Entity Framework, Migrations & Seeding
 **Key points**
@@ -148,15 +155,15 @@ You can:
 
 Example test command (CI):
 - name: Run tests
-  run: dotnet test ./Ticketify.sln --configuration Release
+  run: dotnet test Ticketify.sln --configuration Release
 
 Ensure tests are built before running tests (remove --no-build if you want to build in the same job).
 
 ## GitHub Actions CI/CD (recommended pipeline)
 High-level flow:
 1. Checkout
-2. Setup .NET SDK
-3. Restore (solution)
+2. Setup .NET (DOTNET_VERSION: '9.0.x')
+3. Restore dependencies (solution)
 4. Build API project
 5. Run tests (optional; ensure tests succeed before publish)
 6. Clean publish folder
@@ -230,8 +237,8 @@ app.Urls.Add($"http://0.0.0.0:{port}");
 Build & publish API:
 ```
 dotnet restore Ticketify.sln
-dotnet build ./API/API.csproj -c Release
-dotnet publish ./API/API.csproj -c Release -o ./publish_output
+dotnet build /API/API.csproj -c Release
+dotnet publish /API/API.csproj -c Release -o ./publish_output
 ```
 
 Add migration (local dev):

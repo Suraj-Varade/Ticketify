@@ -52,7 +52,7 @@ try
     using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<TicketContext>();
-    await context.Database.EnsureCreatedAsync();
+    //await context.Database.EnsureCreatedAsync();
     await context.Database.MigrateAsync(); //pending migrations.
     await TicketContextSeed.SeedAsync(context);
 }

@@ -6,7 +6,7 @@ Ticketify is an ASP.NET Core Web API (targeting .NET 9) using:
 * Clean, layered structure: ```API, Core, Infrastructure```
 * EF Core (SqlServer) for persistence
 * Repository pattern
-* Serilog for logging (console + file + Application Insights)
+* Serilog for logging (console + file)
 * Seed data for quick demo
 * Unit tests (xUnit) and test helpers
 * Bicep templates (in ```.github/infra/templates```) for provisioning Azure resources (App Service, SQL Server, App Service Plan, etc.)
@@ -154,8 +154,10 @@ You can:
 * Coverlet (code coverage) may be present; avoid instrumenting builds that produce the final publish artifact to be deployed. In CI, run tests in a separate step and don't copy bin/Debug test outputs to artifact folder.
 
 Example test command (CI):
+```
 - name: Run tests
   run: dotnet test Ticketify.sln --configuration Release
+```
 
 Ensure tests are built before running tests (remove --no-build if you want to build in the same job).
 

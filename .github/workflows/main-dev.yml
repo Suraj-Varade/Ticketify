@@ -71,6 +71,9 @@ jobs:
         uses: azure/login@v2
         with: 
           creds: ${{secrets.AZURE_CREDENTIALS}}
+          
+      - name: Show folder structure
+        run: ls -R .github
       
       # below step will create azure resources - using main_prod.bicep file.
       - name: Deploy azure resources - using main_prod.bicep file

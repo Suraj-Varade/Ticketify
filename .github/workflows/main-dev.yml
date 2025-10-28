@@ -67,6 +67,7 @@ jobs:
         with: 
           creds: ${{secrets.AZURE_CREDENTIALS}}
           
+      - checkout: self
       # below step will create azure resources - using main_dev.bicep file.
       - name: Deploy azure resources - using main_prod.bicep file
         uses: azure/CLI@v2

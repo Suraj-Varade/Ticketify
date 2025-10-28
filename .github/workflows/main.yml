@@ -32,7 +32,7 @@ jobs:
         run: dotnet build ./API/API.csproj --configuration Release --no-restore
         
       - name: Test
-        run: dotnet test ./Ticketify.sln --no-build --verbosity normal
+        run: dotnet test ./Ticketify.sln --configuration Release --verbosity normal
         
       # clean the API output before publishing (avoid leftover test artifacts)
       - name: Clean API publish output

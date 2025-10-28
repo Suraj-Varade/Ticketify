@@ -9,11 +9,6 @@ on:
   
   workflow_dispatch: 
 
-defaults:
-  run:
-    shell: bash
-    working-directory: .
-
 env:
   AZURE_WEBAPP_NAME: ticketifyne-dev
   DOTNET_VERSION: '9.0.x'
@@ -72,13 +67,6 @@ jobs:
         with: 
           creds: ${{secrets.AZURE_CREDENTIALS}}
           
-      - name: Check folders
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "List contents:"
-          ls -R
-      
       # below step will create azure resources - using main_prod.bicep file.
       - name: Deploy azure resources - using main_prod.bicep file
         uses: azure/CLI@v2
@@ -87,7 +75,7 @@ jobs:
             az group create --name ticketifyne-dev-resgrp --location centralindia
             az deployment group create \
             --resource-group ticketifyne-dev-resgrp \
-            --template-file ./.github/infra/templates/main_dev.bicep \
+            --template-file ../.github/infra/templates/main_dev.bicep \
             --parameters webAppName=${{env.AZURE_WEBAPP_NAME}} \
             sqlAdminPassword=${{secrets.AZURE_SQL_PASSWORD}} 
       

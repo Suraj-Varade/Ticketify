@@ -75,7 +75,7 @@ jobs:
             az group create --name ticketifyne-dev-resgrp --location centralindia
             az deployment group create \
             --resource-group ticketifyne-dev-resgrp \
-            --template-file ../.github/infra/templates/main_dev.bicep \
+            --template-file ./Ticketify/.github/infra/templates/main_dev.bicep \
             --parameters webAppName=${{env.AZURE_WEBAPP_NAME}} \
             sqlAdminPassword=${{secrets.AZURE_SQL_PASSWORD}} 
       

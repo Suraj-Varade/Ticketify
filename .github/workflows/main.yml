@@ -4,6 +4,9 @@ on:
   push:
     branches: ['main']
     
+  pull_request: 
+    branches: ['main']
+  
   workflow_dispatch: 
 
 env:
@@ -26,13 +29,17 @@ jobs:
         run: dotnet restore ./Ticketify.sln
         
       - name: Build
-        run: dotnet build ./API/API.csproj --configuration Release
+        run: dotnet build ./API/API.csproj --configuration Release --no-restore
         
       - name: Test
-        run: dotnet test ./Ticketify.sln
+        run: dotnet test ./Ticketify.sln --no-build --verbosity normal
+        
+      # clean the API output before publishing (avoid leftover test artifacts)
+      - name: Clean API publish output
+        run: rm -rf ${{env.BUILD_OUTPUT}}
         
       - name: Publish
-        run: dotnet publish ./API/API.csproj -c Release -o ${{env.BUILD_OUTPUT}}
+        run: dotnet publish ./API/API.csproj -c Release -o ${{env.BUILD_OUTPUT}} --no-build
         
       - name: Upload artifact
         uses: actions/upload-artifact@v4

@@ -72,8 +72,12 @@ jobs:
         with: 
           creds: ${{secrets.AZURE_CREDENTIALS}}
           
-      - name: Show folder structure
-        run: ls -R .github
+      - name: Check folders
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "List contents:"
+          ls -R
       
       # below step will create azure resources - using main_prod.bicep file.
       - name: Deploy azure resources - using main_prod.bicep file

@@ -297,3 +297,29 @@ These screenshots confirm:
 - The workflow builds and deploys using Infrastructure as Code.
 - Application successfully published to Azure Web App.
 - Environment separation for **Dev** and **Prod**.
+
+## ⚙️ Re-running the Workflow
+Your GitHub Actions workflow:
+* 🧱 Builds & publishes the .NET API
+* ☁️ Deploys Azure resources via Bicep
+* 🚀 Deploys the app to Azure Web App
+
+**✅ Idempotent Behavior**
+
+Re-running the same workflow won’t fail — Azure Resource Manager (ARM) and Bicep are idempotent.
+
+They will:
+* 🏗️ Create resources if missing
+* 🔁 Update existing ones if changed
+* ⏭️ Skip unchanged resources
+
+**Example**
+```text
+az group create --name ticketify-dev-resgrp --location centralindia
+```
+
+If the group exists → returns
+```
+"provisioningState": "Succeeded"
+```
+and continues safely.

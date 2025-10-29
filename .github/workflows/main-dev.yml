@@ -10,7 +10,7 @@ on:
   workflow_dispatch: 
 
 env:
-  AZURE_WEBAPP_NAME: ticketifyne-dev
+  AZURE_WEBAPP_NAME: ticketify-dev
   DOTNET_VERSION: '9.0.x'
   BUILD_OUTPUT: './publish_output'
 

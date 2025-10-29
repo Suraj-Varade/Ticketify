@@ -16,7 +16,7 @@ defaults:
     working-directory: .
 
 env:
-  AZURE_WEBAPP_NAME: ticketifyne-prd
+  AZURE_WEBAPP_NAME: ticketify-prd
   DOTNET_VERSION: '9.0.x'
   BUILD_OUTPUT: './publish_output'
 

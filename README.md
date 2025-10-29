@@ -37,7 +37,7 @@ Ticketify/
 │   └── Middleware
 │   |   └── ExceptionMiddleware.cs
 │   |   └── LogRequestMiddleware.cs
-│   └── API.http
+│   └── API.http                                    # list of all api endpoints to test.
 │   └── appsettings.json
 │   └── appsettings.Development.json
 │   └── Program.cs
@@ -184,6 +184,9 @@ You have a Bicep template in:
 ```
 The recommended automation:
 1. Create a GitHub secret AZURE_CREDENTIALS containing your service principal JSON (clientId, clientSecret, subscriptionId, tenantId).
+```text
+az ad sp create-for-rbac --name "github-actions-ticketify" --role contributor --scopes {Azure subscription Id} --sdk-auth
+```
 2. In the workflow, after azure/login@v2, run: 
 ```text
 - name: Deploy Azure resources (Bicep)
@@ -265,7 +268,7 @@ Bicep deployment via CLI:
 az login --service-principal -u <clientId> -p <clientSecret> --tenant <tenantId>
 az group create -n myRG -l eastus
 az deployment group create -g myRG --template-file ./.github/infra/templates/main_dev.bicep \
---parameters webAppName=myticketify sqlAdminPassword=<secret>
+--parameters webAppName=<webAppName> sqlAdminPassword=<secret>
 ```
 
 ## Where to look in the repo
@@ -280,3 +283,17 @@ az deployment group create -g myRG --template-file ./.github/infra/templates/mai
   * login with service principal, 
   * run the Bicep deployment, 
   * then deploy the published artifact.
+
+## 🚀 Deployment Proof & CI/CD Overview
+
+You can find screenshots demonstrating automated deployments to **Dev** and **Prod** environments via GitHub Actions and Azure:
+
+Path: 
+```
+docs/images
+```
+
+These screenshots confirm:
+- The workflow builds and deploys using Infrastructure as Code.
+- Application successfully published to Azure Web App.
+- Environment separation for **Dev** and **Prod**.
